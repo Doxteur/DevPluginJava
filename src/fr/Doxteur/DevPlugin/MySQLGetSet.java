@@ -86,9 +86,11 @@ public class MySQLGetSet implements Listener {
 	public void setMoney(UUID uuid, int money, String bs) {
 		try {
 
-			PreparedStatement getMoney = plugin.getConnection().prepareStatement("UPDATE playermoney SET MONEY=?");
+			PreparedStatement getMoney = plugin.getConnection().prepareStatement("UPDATE playermoney SET MONEY=? WHERE UUID = ?");
 				int choix = (bs.equals("Achat")?-money:money);
 				getMoney.setInt(1, (getMoney(uuid) + choix));
+				getMoney.setString(2, uuid.toString());
+				
 
 				getMoney.executeUpdate();
 				System.out.println("Money has been se to " + (getMoney(uuid) + choix));
